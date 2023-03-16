@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Криптовалюты</h1>
+
+{#<form method="GET" action="{% url 'currency_list' %}">#}
+{#    <input type="text" name="search_query" placeholder="Поиск криптовалюты">#}
+{#    <button type="submit">Поиск</button>#}
+{#</form>#}
+
+<table>
+    <thead>
+        <tr>
+            <th>Символьный код</th>
+            <th>Название</th>
+            <th>Текущий курс</th>
+            <th>Изменение за 24 часа</th>
+            <th>Объем торгов</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for crypto in data %}
+            {% with convert=convert %}
+            <tr>
+                <td>{{ crypto.symbol }}</td>
+                <td>{{ crypto.name }}</td>
+                <td>{{ crypto.quote.convert.price }}</td>
+                <td>{{ crypto.change_24h }}</td>
+                <td>{{ crypto.volume }}</td>
+            </tr>
+            {% endwith %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
