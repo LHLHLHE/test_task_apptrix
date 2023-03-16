@@ -15,22 +15,13 @@ class Cryptocurrency(models.Model):
         unique=True,
         verbose_name='Символьный код'
     )
-    price = models.FloatField(
-        verbose_name='Цена за единицу в USD'
-    )
-    percent_change_24h = models.FloatField(
-        verbose_name='Изменение цены в процентах'
-    )
-    volume = models.FloatField(
-        verbose_name='Объем торгов'
-    )
 
     class Meta:
         verbose_name = 'Криптовалюта'
         verbose_name_plural = 'Криптовалюты'
 
     def __str__(self):
-        return self.name, self.symbol, self.price
+        return self.name, self.symbol
 
 
 class Favorites(models.Model):

@@ -1,10 +1,13 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 
-router = DefaultRouter()
+from api.views import CurrencyListAPIView
 
 urlpatterns = [
     path('v1/auth/', include('djoser.urls.authtoken')),
-    path('v1/', include(router.urls)),
+    path(
+        'v1/currencies/',
+        CurrencyListAPIView.as_view(),
+        name='currencies_list'
+    ),
     path('v1/', include('djoser.urls.base')),
 ]
