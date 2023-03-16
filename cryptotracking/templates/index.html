@@ -14,21 +14,21 @@
             <th>Символьный код</th>
             <th>Название</th>
             <th>Текущий курс</th>
+           <th>Объем торгов</th>
             <th>Изменение за 24 часа</th>
-            <th>Объем торгов</th>
         </tr>
     </thead>
     <tbody>
         {% for crypto in data %}
-            {% with convert=convert %}
             <tr>
-                <td>{{ crypto.symbol }}</td>
-                <td>{{ crypto.name }}</td>
-                <td>{{ crypto.quote.convert.price }}</td>
-                <td>{{ crypto.change_24h }}</td>
-                <td>{{ crypto.volume }}</td>
+            <td>{{ crypto.symbol }}</td>
+            <td>{{ crypto.name }}</td>
+            {% for currency, quote in crypto.quote.items %}
+                <td>{{ quote.price }} {{ currency }}</td>
+                <td>{{ quote.volume_24h }}</td>
+                <td>{{ quote.percent_change_24h }}%</td>
+                {% endfor %}
             </tr>
-            {% endwith %}
         {% endfor %}
     </tbody>
 </table>

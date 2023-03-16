@@ -36,7 +36,10 @@ class CurrencyListAPIView(APIView):
                 params=params
             )
             data = json.loads(response.text).get('data')
-            return Response({'data': data, 'convert': params.get('convert')})
+            convert = params.get('convert')
+            return Response({
+                'data': data,
+            })
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             return Response({'error': e})
 
@@ -65,4 +68,6 @@ class CurrencyRetrieveAPIView(APIView):
 
 # class AddToFavoritesAPIView(APIView):
 #     def post(self, request, currency_symbol):
+
+
 
