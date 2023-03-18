@@ -27,11 +27,12 @@ class Cryptocurrency(models.Model):
 class Favorites(models.Model):
     user = models.ForeignKey(
         User,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='favorites',
     )
     favorite_currency = models.ForeignKey(
         Cryptocurrency,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
 
     class Meta:

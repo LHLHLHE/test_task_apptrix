@@ -1,18 +1,33 @@
 from django.urls import path, include, re_path
 
-from .views import CurrencyRetrieveAPIView, CurrencyListAPIView
+from .views import (
+    CurrencyRetrieveAPIView,
+    CurrencyListAPIView,
+    FavoritesCreateDestroyAPIView,
+    FavoritesListAPIView
+)
 
 urlpatterns = [
-    path('v1/auth/', include('djoser.urls.authtoken')),
+    path('auth/', include('djoser.urls.authtoken')),
     path(
-        'v1/currencies/',
+        'currencies/',
         CurrencyListAPIView.as_view(),
         name='currency_list'
     ),
     re_path(
-        r'v1/currencies/(?P<currency_symbol>[A-Z]+)',
+        r'currencies/(?P<currency_symbol>[0-9]*[A-Z]+)/$',
         CurrencyRetrieveAPIView.as_view(),
         name='currency'
     ),
-    path('v1/', include('djoser.urls.base')),
+    re_path(
+        r'currencies/(?P<currency_symbol>[0-9]*[A-Z]+)/favorite',
+        FavoritesCreateDestroyAPIView.as_view(),
+        name='add_delete_favorites'
+    ),
+    path(
+        'currencies/favorites/',
+        FavoritesListAPIView.as_view(),
+        name='get_favorites'
+    ),
+    path('', include('djoser.urls.base')),
 ]
