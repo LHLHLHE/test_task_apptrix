@@ -42,7 +42,7 @@ class NewsAPIView(APIView):
             )
         except (ConnectionError, Timeout, TooManyRedirects) as e:
             return Response({'error': e})
-        print(json.loads(response.text))
+
         data = json.loads(response.text).get('articles')
         return Response(data, status=status.HTTP_200_OK)
 

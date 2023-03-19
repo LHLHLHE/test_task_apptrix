@@ -7,6 +7,19 @@ from .views import CurrencyListAPIView, CurrencyRetrieveAPIView
 from cryptocurrencies.models import Favorites, Cryptocurrency, User
 
 
+class NewsAPIViewTest(APITestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.view = CurrencyListAPIView.as_view()
+
+    def test_get_news(self):
+        request = self.factory.get('/api/currencies/news/')
+        response = self.view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(response.data)
+
+
 class TestCurrencyListAPIView(APITestCase):
     def setUp(self):
         self.factory = RequestFactory()
