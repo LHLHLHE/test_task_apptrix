@@ -13,16 +13,38 @@ from cryptocurrencies.models import Favorites, Cryptocurrency
 
 load_dotenv()
 
-API_KEY = os.getenv('COIN_MARKET_CAP_API_KEY')
+COIN_MARKET_API_KEY = os.getenv('COIN_MARKET_CAP_API_KEY')
 API_URL = 'https://pro-api.coinmarketcap.com'
+
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 
 CURRENCY_LIST_ENDPOINT = '/v1/cryptocurrency/listings/latest'
 CURRENCY_ENDPOINT = '/v2/cryptocurrency/quotes/latest'
 
 HEADERS = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': f'{API_KEY}',
+    'X-CMC_PRO_API_KEY': f'{COIN_MARKET_API_KEY}',
 }
+
+
+class NewsAPIView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        params = request.query_params
+        session = Session()
+        session.headers.update(HEADERS)
+
+        try:
+            response = session.get(
+                f'https://newsapi.org/v2/everything'
+                f'?q=Cryptocurrency&sortBy=popularity&apiKey={NEWS_API_KEY}',
+            )
+        except (ConnectionError, Timeout, TooManyRedirects) as e:
+            return Response({'error': e})
+        print(json.loads(response.text))
+        data = json.loads(response.text).get('articles')
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class CurrencyListAPIView(APIView):

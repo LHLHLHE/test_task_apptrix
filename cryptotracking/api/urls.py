@@ -4,11 +4,13 @@ from .views import (
     CurrencyRetrieveAPIView,
     CurrencyListAPIView,
     FavoritesCreateDestroyAPIView,
-    FavoritesListAPIView
+    FavoritesListAPIView,
+    NewsAPIView
 )
 
 urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
+    path('news/', NewsAPIView.as_view(), name='news'),
     path(
         'currencies/',
         CurrencyListAPIView.as_view(),
