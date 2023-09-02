@@ -8,9 +8,6 @@ Launch a project:
 python3 manage.py runserver
 ```
 
-## **Ссылка**
-http://levk.pythonanywhere.com/
-
 ## **Эндпоинты**
 **Регистрация**
 ```
